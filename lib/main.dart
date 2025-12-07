@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:keypress_simulator/keypress_simulator.dart';
 
-void main() async {
+void main() {
   runApp(MaterialApp(home: AutoTyping()));
 }
 
@@ -15,16 +15,58 @@ class AutoTyping extends StatefulWidget {
 
 class _AutoTypingState extends State<AutoTyping> {
   //為了注重效率，提前做了一個可能會用到的key列表，最大化查找效率。
-  List<PhysicalKeyboardKey> commonlykeys = [];
-  void defindCKeysList() {
-    for (var key in PhysicalKeyboardKey.knownPhysicalKeys) {
-      if (key.debugName!.contains(RegExp("Key "))) {
-        commonlykeys.add(key);
-      } else if (key.debugName!.contains(RegExp("Digit"))) {
-        commonlykeys.add(key);
-      }
-    }
-  }
+  //不在使用key.debugname，因為這個東西在release中不存在，改用key.usbHidUsage
+  // List<PhysicalKeyboardKey> commonlykeys = [];
+  // void defindCKeysList() {
+  //   for (var key in PhysicalKeyboardKey.knownPhysicalKeys) {
+  //     if (key.usbHidUsage >= 0x70004 && key.usbHidUsage <= 0x7001D) {
+  //       commonlykeys.add(key);
+  //     } else if (key.usbHidUsage >= 0x62 && key.usbHidUsage <= 0x61) {
+  //       commonlykeys.add(key);
+  //     }
+  //   }
+  // }
+
+  final Map<String, int> charToKey = {
+    // Letters
+    'A': 0x00070004,
+    'B': 0x00070005,
+    'C': 0x00070006,
+    'D': 0x00070007,
+    'E': 0x00070008,
+    'F': 0x00070009,
+    'G': 0x0007000A,
+    'H': 0x0007000B,
+    'I': 0x0007000C,
+    'J': 0x0007000D,
+    'K': 0x0007000E,
+    'L': 0x0007000F,
+    'M': 0x00070010,
+    'N': 0x00070011,
+    'O': 0x00070012,
+    'P': 0x00070013,
+    'Q': 0x00070014,
+    'R': 0x00070015,
+    'S': 0x00070016,
+    'T': 0x00070017,
+    'U': 0x00070018,
+    'V': 0x00070019,
+    'W': 0x0007001A,
+    'X': 0x0007001B,
+    'Y': 0x0007001C, 'Z': 0x0007001D,
+
+    // Numbers (top row)
+    '0': 0x00070062,
+    '1': 0x00070059,
+    '2': 0x0007005a,
+    '3': 0x0007005b,
+    '4': 0x0007005c,
+    '5': 0x0007005d,
+    '6': 0x0007005e,
+    '7': 0x0007005f,
+    '8': 0x00070060,
+    '9': 0x00070061,
+  };
 
   Future<void> realTyping(String text, Duration delay) async {
     for (var char in text.characters) {
@@ -73,36 +115,71 @@ class _AutoTypingState extends State<AutoTyping> {
         await typing(PhysicalKeyboardKey.enter);
         continue;
       }
-      bool isup = isUpperWord(char);
+      bool isup = isUpperWord(char) && isLetter(char);
       //檢查英文字母
-      for (var key in commonlykeys) {
-        if (key.debugName == "Key ${char.toUpperCase()}") {
-          //檢查是否為大寫
-          if (isup) {
-            keyPressSimulator.simulateKeyDown(
-              PhysicalKeyboardKey.shiftLeft,
-            );
-            keyPressSimulator.simulateKeyDown(key);
-            await Future.delayed(Duration(milliseconds: 20));
 
-            keyPressSimulator.simulateKeyUp(key);
+      if (charToKey[char.toUpperCase()] != null) {
+        if (isup) {
+          keyPressSimulator.simulateKeyDown(
+            PhysicalKeyboardKey.shiftLeft,
+          );
+          keyPressSimulator.simulateKeyDown(
+            PhysicalKeyboardKey.findKeyByCode(
+              charToKey[char.toUpperCase()]!,
+            ),
+          );
+          await Future.delayed(Duration(milliseconds: 20));
 
-            keyPressSimulator.simulateKeyUp(
-              PhysicalKeyboardKey.shiftLeft,
-            );
-            // typingWithShift(key);
-          } else {
-            //小寫
-            typing(key);
-          }
-          print("$key 他是 大寫還是小寫 $isup");
-          continue;
-        } else if (key.debugName == "Digit $char") {
-          //數字
-          await typing(key);
-          continue;
+          keyPressSimulator.simulateKeyUp(
+            PhysicalKeyboardKey.findKeyByCode(
+              charToKey[char.toUpperCase()]!,
+            ),
+          );
+
+          keyPressSimulator.simulateKeyUp(
+            PhysicalKeyboardKey.shiftLeft,
+          );
+        } else {
+          typing(
+            PhysicalKeyboardKey.findKeyByCode(
+              charToKey[char.toUpperCase()]!,
+            )!,
+          );
         }
+        print(
+          "這個key是${PhysicalKeyboardKey.findKeyByCode(charToKey[char.toUpperCase()]!)}，他是大寫還是小寫 $isup",
+        );
       }
+
+      // for (var key in commonlykeys) {
+      //   if (key.usbHidUsage == charToKey[char.toUpperCase()]) {
+      //     //檢查是否為大寫
+      //     if (isup) {
+      // keyPressSimulator.simulateKeyDown(
+      //   PhysicalKeyboardKey.shiftLeft,
+      // );
+      // keyPressSimulator.simulateKeyDown(key);
+      // await Future.delayed(Duration(milliseconds: 20));
+
+      // keyPressSimulator.simulateKeyUp(key);
+
+      // keyPressSimulator.simulateKeyUp(
+      //   PhysicalKeyboardKey.shiftLeft,
+      // );
+      //       // typingWithShift(key);
+      //     } else {
+      //       //小寫
+      //       typing(key);
+      //     }
+      //     print("$key 他是 大寫還是小寫 $isup");
+      //     continue;
+      //   } else if (key.usbHidUsage == charToKey[char]) {
+      //     //數字
+      //     await typing(key);
+      //     print("$key 是個數字");
+      //     continue;
+      //   }
+      // }
 
       await Future.delayed(delay);
     }
@@ -129,6 +206,11 @@ class _AutoTypingState extends State<AutoTyping> {
     return word == word.toUpperCase();
   }
 
+  bool isLetter(String char) {
+    final regExp = RegExp(r'[a-zA-Z]');
+    return regExp.hasMatch(char);
+  }
+
   String addEntertoText(String text) {
     final wordPattern = RegExp(r'[\r\n]+');
     return text.replaceAll(wordPattern, r"^");
@@ -149,13 +231,14 @@ class _AutoTypingState extends State<AutoTyping> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    defindCKeysList();
+    // defindCKeysList();
     waitDelayTextCon.text = "$waitDelay";
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text("自動化打字程式", style: TextStyle(fontFamily: "Cubic")),
         backgroundColor: Colors.orange,
@@ -365,6 +448,7 @@ class _AutoTypingState extends State<AutoTyping> {
                 ),
               ),
             ),
+
             Text(
               displayText,
               style: TextStyle(
