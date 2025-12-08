@@ -460,7 +460,8 @@ class _AutoTypingState extends State<AutoTyping> {
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
+      bottomNavigationBar: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(8.0),
         child: Text(
           "(使用者小提醒：等待秒數越低可能會越多錯字喔，有些電腦的處理速度沒那麼快)",
