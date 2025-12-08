@@ -28,45 +28,54 @@ class _AutoTypingState extends State<AutoTyping> {
   // }
 
   final Map<String, PhysicalKeyboardKey> charToKey = {
-    // Letters
-    'a': PhysicalKeyboardKey.findKeyByCode(0x00070004)!,
-    'b': PhysicalKeyboardKey.findKeyByCode(0x00070005)!,
-    'c': PhysicalKeyboardKey.findKeyByCode(0x00070006)!,
-    'd': PhysicalKeyboardKey.findKeyByCode(0x00070007)!,
-    'e': PhysicalKeyboardKey.findKeyByCode(0x00070008)!,
-    'f': PhysicalKeyboardKey.findKeyByCode(0x00070009)!,
-    'g': PhysicalKeyboardKey.findKeyByCode(0x0007000A)!,
-    'h': PhysicalKeyboardKey.findKeyByCode(0x0007000B)!,
-    'i': PhysicalKeyboardKey.findKeyByCode(0x0007000C)!,
-    'j': PhysicalKeyboardKey.findKeyByCode(0x0007000D)!,
-    'k': PhysicalKeyboardKey.findKeyByCode(0x0007000E)!,
-    'l': PhysicalKeyboardKey.findKeyByCode(0x0007000F)!,
-    'm': PhysicalKeyboardKey.findKeyByCode(0x00070010)!,
-    'n': PhysicalKeyboardKey.findKeyByCode(0x00070011)!,
-    'o': PhysicalKeyboardKey.findKeyByCode(0x00070012)!,
-    'p': PhysicalKeyboardKey.findKeyByCode(0x00070013)!,
-    'q': PhysicalKeyboardKey.findKeyByCode(0x00070014)!,
-    'r': PhysicalKeyboardKey.findKeyByCode(0x00070015)!,
-    's': PhysicalKeyboardKey.findKeyByCode(0x00070016)!,
-    't': PhysicalKeyboardKey.findKeyByCode(0x00070017)!,
-    'u': PhysicalKeyboardKey.findKeyByCode(0x00070018)!,
-    'v': PhysicalKeyboardKey.findKeyByCode(0x00070019)!,
-    'w': PhysicalKeyboardKey.findKeyByCode(0x0007001A)!,
-    'x': PhysicalKeyboardKey.findKeyByCode(0x0007001B)!,
-    'y': PhysicalKeyboardKey.findKeyByCode(0x0007001C)!,
-    'z': PhysicalKeyboardKey.findKeyByCode(0x0007001D)!,
+    // 字母
+    'a': PhysicalKeyboardKey.keyA,
+    'b': PhysicalKeyboardKey.keyB,
+    'c': PhysicalKeyboardKey.keyC,
+    'd': PhysicalKeyboardKey.keyD,
+    'e': PhysicalKeyboardKey.keyE,
+    'f': PhysicalKeyboardKey.keyF,
+    'g': PhysicalKeyboardKey.keyG,
+    'h': PhysicalKeyboardKey.keyH,
+    'i': PhysicalKeyboardKey.keyI,
+    'j': PhysicalKeyboardKey.keyJ,
+    'k': PhysicalKeyboardKey.keyK,
+    'l': PhysicalKeyboardKey.keyL,
+    'm': PhysicalKeyboardKey.keyM,
+    'n': PhysicalKeyboardKey.keyN,
+    'o': PhysicalKeyboardKey.keyO,
+    'p': PhysicalKeyboardKey.keyP,
+    'q': PhysicalKeyboardKey.keyQ,
+    'r': PhysicalKeyboardKey.keyR,
+    's': PhysicalKeyboardKey.keyS,
+    't': PhysicalKeyboardKey.keyT,
+    'u': PhysicalKeyboardKey.keyU,
+    'v': PhysicalKeyboardKey.keyV,
+    'w': PhysicalKeyboardKey.keyW,
+    'x': PhysicalKeyboardKey.keyX,
+    'y': PhysicalKeyboardKey.keyY,
+    'z': PhysicalKeyboardKey.keyZ,
 
-    // Numbers (top row)
-    '0': PhysicalKeyboardKey.findKeyByCode(0x00070062)!,
-    '1': PhysicalKeyboardKey.findKeyByCode(0x00070059)!,
-    '2': PhysicalKeyboardKey.findKeyByCode(0x0007005a)!,
-    '3': PhysicalKeyboardKey.findKeyByCode(0x0007005b)!,
-    '4': PhysicalKeyboardKey.findKeyByCode(0x0007005c)!,
-    '5': PhysicalKeyboardKey.findKeyByCode(0x0007005d)!,
-    '6': PhysicalKeyboardKey.findKeyByCode(0x0007005e)!,
-    '7': PhysicalKeyboardKey.findKeyByCode(0x0007005f)!,
-    '8': PhysicalKeyboardKey.findKeyByCode(0x00070060)!,
-    '9': PhysicalKeyboardKey.findKeyByCode(0x00070061)!,
+    // 數字
+    '0': PhysicalKeyboardKey.digit0,
+    '1': PhysicalKeyboardKey.digit1,
+    '2': PhysicalKeyboardKey.digit2,
+    '3': PhysicalKeyboardKey.digit3,
+    '4': PhysicalKeyboardKey.digit4,
+    '5': PhysicalKeyboardKey.digit5,
+    '6': PhysicalKeyboardKey.digit6,
+    '7': PhysicalKeyboardKey.digit7,
+    '8': PhysicalKeyboardKey.digit8,
+    '9': PhysicalKeyboardKey.digit9,
+    // //特殊字元(不搭配shift)
+    // ' ': PhysicalKeyboardKey.space,
+    // ',': PhysicalKeyboardKey.comma,
+    // '.': PhysicalKeyboardKey.period,
+    // "'": PhysicalKeyboardKey.quote,
+    // '-': PhysicalKeyboardKey.minus,
+    // ';': PhysicalKeyboardKey.semicolon,
+    // //換行符
+    // "^": PhysicalKeyboardKey.enter,
   };
 
   Future<void> realTyping(String text, Duration delay) async {
@@ -75,68 +84,79 @@ class _AutoTypingState extends State<AutoTyping> {
         stopTyping = false;
         return;
       }
-      bool isup = isUpperWord(char) && isLetter(char);
+      bool isup = isUpperWord(char);
+      PhysicalKeyboardKey? key = charToKey[char.toLowerCase()];
 
       //檢查英文字母
-      if (charToKey[char.toLowerCase()] != null) {
+      if (key != null) {
         if (isup) {
           keyPressSimulator.simulateKeyDown(
             PhysicalKeyboardKey.shiftLeft,
           );
-          keyPressSimulator.simulateKeyDown(charToKey[char]);
-          await Future.delayed(Duration(milliseconds: 20));
+          keyPressSimulator.simulateKeyDown(key);
+          await Future.delayed(Duration(milliseconds: 10));
 
-          keyPressSimulator.simulateKeyUp(charToKey[char]);
+          keyPressSimulator.simulateKeyUp(key);
 
           keyPressSimulator.simulateKeyUp(
             PhysicalKeyboardKey.shiftLeft,
           );
         } else {
-          typing(charToKey[char]!);
+          typing(key);
         }
-        print("這個key是${charToKey[char]}，他是大寫還是小寫 $isup");
-        continue;
-      }
-      //特殊字元情況
-      if (char == " ") {
-        await typing(PhysicalKeyboardKey.space);
-        continue;
-      } else if (char == ",") {
-        await typing(PhysicalKeyboardKey.comma);
-        continue;
-      } else if (char == ".") {
-        await typing(PhysicalKeyboardKey.period);
-        continue;
-      } else if (char == "'") {
-        await typing(PhysicalKeyboardKey.quote);
-        continue;
-      } else if (char == "-") {
-        await typing(PhysicalKeyboardKey.minus);
-        continue;
-      } else if (char == ";") {
-        await typing(PhysicalKeyboardKey.semicolon);
-        continue;
-      } else if (char == "(") {
-        await typingWithShift(PhysicalKeyboardKey.digit9);
-        continue;
-      } else if (char == ")") {
-        await typingWithShift(PhysicalKeyboardKey.digit0);
-        continue;
-      } else if (char == "?") {
-        await typingWithShift(PhysicalKeyboardKey.slash);
-        continue;
-      } else if (char == "!") {
-        await typingWithShift(PhysicalKeyboardKey.digit1);
-        continue;
-      } else if (char == '"') {
-        await typingWithShift(PhysicalKeyboardKey.quote);
-        continue;
-      }
-      //換行符
-      if (char == "^") {
-        print("按下換行了");
-        await typing(PhysicalKeyboardKey.enter);
-        continue;
+        print("這個key是$key，他是大寫還是小寫 $isup");
+      } else {
+        //特殊字元情況
+        if (char == " ") {
+          await typing(PhysicalKeyboardKey.space);
+          continue;
+        } else if (char == ",") {
+          await typing(PhysicalKeyboardKey.comma);
+          continue;
+        } else if (char == ".") {
+          await typing(PhysicalKeyboardKey.period);
+          continue;
+        } else if (char == "'") {
+          await typing(PhysicalKeyboardKey.quote);
+          continue;
+        } else if (char == "-") {
+          await typing(PhysicalKeyboardKey.minus);
+          continue;
+        } else if (char == ";") {
+          await typing(PhysicalKeyboardKey.semicolon);
+          continue;
+        } else if (char == "(") {
+          await typingWithShift(PhysicalKeyboardKey.digit9);
+          continue;
+        } else if (char == ")") {
+          await typingWithShift(PhysicalKeyboardKey.digit0);
+          continue;
+        } else if (char == "?") {
+          await typingWithShift(PhysicalKeyboardKey.slash);
+          continue;
+        } else if (char == "!") {
+          await typingWithShift(PhysicalKeyboardKey.digit1);
+          continue;
+        } else if (char == '"') {
+          await typingWithShift(PhysicalKeyboardKey.quote);
+          continue;
+        } else if (char == "(") {
+          await typingWithShift(PhysicalKeyboardKey.digit9);
+        } else if (char == ")") {
+          await typingWithShift(PhysicalKeyboardKey.digit0);
+        } else if (char == "?") {
+          await typingWithShift(PhysicalKeyboardKey.slash);
+        } else if (char == "!") {
+          await typingWithShift(PhysicalKeyboardKey.digit1);
+        } else if (char == '"') {
+          await typingWithShift(PhysicalKeyboardKey.quote);
+        }
+        //換行符
+        if (char == "^") {
+          print("按下換行了");
+          await typing(PhysicalKeyboardKey.enter);
+          continue;
+        }
       }
 
       // for (var key in commonlykeys) {
@@ -175,7 +195,7 @@ class _AutoTypingState extends State<AutoTyping> {
 
   Future<void> typing(PhysicalKeyboardKey typingkey) async {
     keyPressSimulator.simulateKeyDown(typingkey);
-    await Future.delayed(Duration(milliseconds: 20));
+    await Future.delayed(Duration(milliseconds: 10));
     keyPressSimulator.simulateKeyUp(typingkey);
   }
 
@@ -183,7 +203,7 @@ class _AutoTypingState extends State<AutoTyping> {
   Future<void> typingWithShift(PhysicalKeyboardKey key) async {
     keyPressSimulator.simulateKeyDown(PhysicalKeyboardKey.shiftLeft);
     keyPressSimulator.simulateKeyDown(key);
-    await Future.delayed(Duration(milliseconds: 20));
+    await Future.delayed(Duration(milliseconds: 10));
 
     keyPressSimulator.simulateKeyUp(key);
 
