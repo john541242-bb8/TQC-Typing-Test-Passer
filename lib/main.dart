@@ -109,37 +109,28 @@ class _AutoTypingState extends State<AutoTyping> {
         //特殊字元情況
         if (char == " ") {
           await typing(PhysicalKeyboardKey.space);
-          continue;
         } else if (char == ",") {
           await typing(PhysicalKeyboardKey.comma);
-          continue;
         } else if (char == ".") {
           await typing(PhysicalKeyboardKey.period);
-          continue;
         } else if (char == "'") {
           await typing(PhysicalKeyboardKey.quote);
-          continue;
         } else if (char == "-") {
           await typing(PhysicalKeyboardKey.minus);
-          continue;
         } else if (char == ";") {
           await typing(PhysicalKeyboardKey.semicolon);
-          continue;
+        } else if (char == ":") {
+          await typingWithShift(PhysicalKeyboardKey.semicolon);
         } else if (char == "(") {
           await typingWithShift(PhysicalKeyboardKey.digit9);
-          continue;
         } else if (char == ")") {
           await typingWithShift(PhysicalKeyboardKey.digit0);
-          continue;
         } else if (char == "?") {
           await typingWithShift(PhysicalKeyboardKey.slash);
-          continue;
         } else if (char == "!") {
           await typingWithShift(PhysicalKeyboardKey.digit1);
-          continue;
         } else if (char == '"') {
           await typingWithShift(PhysicalKeyboardKey.quote);
-          continue;
         } else if (char == "(") {
           await typingWithShift(PhysicalKeyboardKey.digit9);
         } else if (char == ")") {
