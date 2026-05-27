@@ -1,0 +1,20 @@
+     Artist and composer Ben Grosser, who is working on an MFA in New
+Media at the University of Illinois, has developed a robot that's able
+to hear the world around it and use those sounds to create a painting.
+The Interactive Robotic Painting Machine has a microphone that captures
+surrounding sound and a genetic algorithm designed to transform those
+sounds into computer code ultimately drives the robot's paintbrush in
+three dimensions, controlling how much paint to put on the brush and
+how much pressure to apply to canvass.
+     Chi-Sang Poon, a principal research scientist in the Harvard-MIT
+Division of Health Sciences and Technology, is the senior author of the
+paper describing the chip in the Proceedings of the National Academy of
+Sciences.  He said in a press release that the technology will offer
+insights into how the brain works and could be used in prosthetics,
+a field that is rapidly expanding.
+     Earlier ideas about what may have caused this die-off related
+to the break-up of the super-continent Pangaea.  Any heart-broken
+soul will tell you that a nasty break-up can feel like the end of the
+world, but the break-up of Pangaea puts that in perspective.  Massive
+volcanoes spewed lava, ash and greenhouse gases as the continents
+tore apart.  Such a massive disruption may have been enough to cause

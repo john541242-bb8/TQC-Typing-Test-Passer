@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:keypress_simulator/keypress_simulator.dart';
+import 'article_service.dart';
 
 void main() {
   runApp(MaterialApp(home: AutoTyping()));
@@ -79,6 +80,7 @@ class _AutoTypingState extends State<AutoTyping> {
   };
 
   Future<void> realTyping(String text, Duration delay) async {
+    text = addEntertoText(text);
     for (var char in text.characters) {
       if (stopTyping) {
         stopTyping = false;
@@ -121,16 +123,8 @@ class _AutoTypingState extends State<AutoTyping> {
           await typing(PhysicalKeyboardKey.semicolon);
         } else if (char == ":") {
           await typingWithShift(PhysicalKeyboardKey.semicolon);
-        } else if (char == "(") {
-          await typingWithShift(PhysicalKeyboardKey.digit9);
-        } else if (char == ")") {
-          await typingWithShift(PhysicalKeyboardKey.digit0);
-        } else if (char == "?") {
-          await typingWithShift(PhysicalKeyboardKey.slash);
-        } else if (char == "!") {
-          await typingWithShift(PhysicalKeyboardKey.digit1);
-        } else if (char == '"') {
-          await typingWithShift(PhysicalKeyboardKey.quote);
+        } else if (char == "&") {
+          await typingWithShift(PhysicalKeyboardKey.digit4);
         } else if (char == "(") {
           await typingWithShift(PhysicalKeyboardKey.digit9);
         } else if (char == ")") {
@@ -142,6 +136,7 @@ class _AutoTypingState extends State<AutoTyping> {
         } else if (char == '"') {
           await typingWithShift(PhysicalKeyboardKey.quote);
         }
+
         //換行符
         if (char == "^") {
           print("按下換行了");
@@ -217,20 +212,20 @@ class _AutoTypingState extends State<AutoTyping> {
 
   final targetTextController = TextEditingController();
   final waitDelayTextCon = TextEditingController();
-  int waitDelay = 5; //等待開始打字的時間
-  double typingSpeed = 10; //每一個字的間隔(單位：毫秒)
-  // num lastSencond = 0;
+  final articlesTextCon = TextEditingController();
+  int waitDelay = 5;
+  double typingSpeed = 10;
   String displayText = "";
   String buttomText = "點我開始打字";
   bool stopTyping = false;
   bool nowistyping = false;
-  bool waitTimeError = false;
+  bool haveError = false;
+
+  String articleName = "Eng-0206-2.txt";
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // defindCKeysList();
     waitDelayTextCon.text = "$waitDelay";
   }
 
@@ -240,13 +235,13 @@ class _AutoTypingState extends State<AutoTyping> {
       backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text("自動化打字程式", style: TextStyle(fontFamily: "Cubic")),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.orange[200],
         centerTitle: true,
       ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("images/cat_on_keyborad.jpg"),
+            image: AssetImage("images/cute_cat.jpg"),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
               Colors.white.withValues(alpha: 0.7), // 越接近白色，越淡
@@ -310,7 +305,7 @@ class _AutoTypingState extends State<AutoTyping> {
                 cursorRadius: Radius.circular(20),
                 cursorColor: Colors.orange,
                 minLines: 7,
-                maxLines: 10,
+                maxLines: 8,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white.withValues(alpha: 0.4),
@@ -332,9 +327,62 @@ class _AutoTypingState extends State<AutoTyping> {
                 ),
               ),
             ),
-
+            //文章標題輸入框
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 120.0),
+              padding: const EdgeInsets.all(5.0),
+              child: SizedBox(
+                width: 200,
+                child: TextField(
+                  controller: articlesTextCon,
+                  cursorColor: Colors.grey[900],
+                  textAlign: TextAlign.center,
+                  onEditingComplete: () async {
+                    String article = await rootBundle.loadString(
+                      "assets/articles/Eng-${articlesTextCon.text}.txt",
+                    );
+                    try {
+                      print(article);
+                      setState(() {
+                        displayText = "";
+                        targetTextController.text = article;
+                        haveError = false;
+                      });
+                    } catch (e) {
+                      print(e);
+                      setState(() {
+                        displayText = "請輸入正確的題目名稱";
+                        haveError = true;
+                      });
+                    }
+                  },
+                  decoration: InputDecoration(
+                    label: Text(
+                      "輸入題號(數字)",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    hintText: "Eng-",
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                        width: 1,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        width: 3,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withValues(alpha: 0.2),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(120, 10, 120, 0),
               child: TextField(
                 controller: waitDelayTextCon,
                 textAlign: TextAlign.center,
@@ -368,23 +416,24 @@ class _AutoTypingState extends State<AutoTyping> {
                 onChanged: (text) {
                   try {
                     waitDelay = int.parse(text);
-                    waitTimeError = false;
+                    haveError = false;
                     setState(() {
                       displayText = '';
                     });
                   } catch (e) {
                     print(e);
                     setState(() {
-                      waitTimeError = true;
+                      haveError = true;
                       displayText = '等待數字必須是個"數值"';
                     });
                   }
                 },
               ),
             ),
+
             ElevatedButton(
               onPressed: () async {
-                if (!waitTimeError) {
+                if (!haveError) {
                   if (!nowistyping) {
                     nowistyping = true;
                     setState(() {
@@ -408,7 +457,8 @@ class _AutoTypingState extends State<AutoTyping> {
                     });
 
                     await realTyping(
-                      addEntertoText(targetTextController.text),
+                      // addEntertoText(targetTextController.text),
+                      targetTextController.text,
                       Duration(
                         milliseconds: typingSpeed.floor().toInt(),
                       ),
