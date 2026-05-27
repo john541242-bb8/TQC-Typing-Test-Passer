@@ -337,10 +337,10 @@ class _AutoTypingState extends State<AutoTyping> {
                   cursorColor: Colors.grey[900],
                   textAlign: TextAlign.center,
                   onEditingComplete: () async {
-                    String article = await rootBundle.loadString(
-                      "assets/articles/Eng-${articlesTextCon.text}.txt",
-                    );
                     try {
+                      String article = await rootBundle.loadString(
+                        "assets/articles/Eng-${articlesTextCon.text}.txt",
+                      );
                       print(article);
                       setState(() {
                         displayText = "";
@@ -503,7 +503,7 @@ class _AutoTypingState extends State<AutoTyping> {
               style: TextStyle(
                 fontFamily: "Cubic",
                 fontSize: 20,
-                color: Colors.black,
+                color: Colors.redAccent[100],
                 fontWeight: FontWeight.w700,
               ),
             ),
