@@ -1,37 +1,19 @@
+# 針對「TQC輸入輔助教學暨認證系統V2013」的自動打字機
+
+
 已經受夠了TQC輸入輔助教學暨認證系統的煩人操作與介面？一個又舊又破又難用的英打程式，在看著範文打字的過程中無法注意自己打了什麼，想要注意時又沒辦法看著範文打，不用這個程式還好，重點是如果這是你們電腦老師的唯一測驗工具呢？這黑白介面以及難看的字體，這種美感實在把對於電腦課的樂趣消磨殆盡，按下提前結束或者是等待死亡倒數之餘，手指在那邊做無謂的掙扎，把電腦課變成一個實實在在的地獄。
 
 這個程式就是要解決上述問題並且讓你的成績提升（要看你會不會被發現），以下是這個程式的主要功能：
 1. **完全自動的打字功能**，目前最高紀錄是每分鐘2492字，此紀錄非常感謝TQC英打測驗程式的計算提供。打字時手指完全不用觸碰鍵盤，只要看著螢幕的英文詞彙節節增長，先把滑鼠移到『提前結束』的按鈕上就行了（一般打一篇文章大約在6~20秒左右），然後，你的破千字的成績就出來了。
 2. **客製化打字間隔**，從1毫秒到0.1秒，也就是說，如果你不想讓你的成績看起來太誇張，此程式也可以應付，讓你既沒有破綻又能通過那對人生沒什麼幫助的測驗。
+3. **提供題目文本**，在2.0版本中，透過分析打字測驗程式原資料夾，將所有題目文本抓取出來，因此在這個程式中你只要輸入題號，立刻會跑出對應題號的題目文本，完全不在需要截圖並識別文字。
 
 
 
-**使用方法**：
-- 啟動 TQC 英打題目
-開啟題目，按「計時開始」顯示文章。
-點擊工具列（避免 TQC 攔截截圖按鈕）。
-分段截圖。
-
-- 按 Shift + Win + S 截取文章上半部 → 點擊右下角通知開啟截圖。
-再截取下半部 → 勿點通知，保留在通知欄。
-
-- **關閉TQC**，避免干擾文字複製。
-文字識別與貼上。
-
-- 開啟第一張截圖 → 用工作列「選取文字」工具（左數第三）複製文字至打字程式。
-重複操作貼上第二張截圖內容。注意，第二張的文字要在第一張的**下一行**在貼上
-- 格式化文字
-段落最前面空五格。
-將程式最大化，確保分段清晰。
-找出每一段的第一行（通常為句點後的下一行）。
-
-- 調整句點間距
-找到每個句點，並在句點與下一個字母間空兩格。
-再為每個句點多加一格，避免格式不對被判一堆錯字。
-開始打字
-
-- 打開複製文章的題目，按「開始打字」。
-將滑鼠游標移至 TQC 輸入框，即可開始打字。
+#### **使用方法**：
+在2.0版本中，我完全不相信你看到這程式的簡單介面之後還不會操作程式。
+記得在開始打字時要將游標按到打字測驗的程式上，不然他不會在那個程式上打字。
+**記得視窗畫打字測驗程式在開始自動打字**：小技巧，經過多次測試，發現如果將打字測驗程式視窗畫打字，可以把打字的速率提升到最高，最快差不多2600個字吧？
 
 
 
@@ -46,5 +28,5 @@
 
 
 
-[![圖片](https://gcdnb.pbrd.co/images/U5VEnQkzf9l3.png?o=1 "圖片")](https://gcdnb.pbrd.co/images/U5VEnQkzf9l3.png?o=1 "圖片")
+[![圖片](https://lh3.googleusercontent.com/rd-d/ALs6j_FrBpaFNAfRbkCV93YMRN8D8cmTYWqLEAgms7P0z8ro1RATgU37Ylwx_R55uRZKok4lJNiOd7WhOEDpuYpmqgXdA_5JuxlC8kpDPKmGvnfTKR7sinEN_6wty1HigM2WrOtg_Ny-U50D74Iv9wXylO7D6oxXvp1-R82mPO48YrDS-2SR0HeOaq8TMdnwPVO7rQVs8W094ioCjFQ5OMkmwWrSEFXgs_9dRcwUPfE_HT3qzzVQ1s9YP4OE-nepBFQ5UaOVsjWTalrqGcUzp539cnrqeWeaAKDO1MpKeQaRS-7R8oVhUoPf0D7fvgEDtZUmD86nVZd-SUDf3QwGYp4pzw1UPHBXV7u0prTNcVPhh-8JskIalh78T6CwR3vZu-hd82SiKix_hbH-Rd87ENI6QxVVoUwffnbYB3UFHXKc72AFCKhw29JmsfyVly0qKd68ULXjPAbapbe4oh5cdlzmN99tjqB-aRr5kf5YBDF-lj9eJNmg7pGnsCnzxTyK1qYNqCBPeeEbh4F8c0Pt0djABpDaqcPyE2XI9vgWQOoTbslFpKuZYvD8PwrqBH5f5N7a3eGVgm_gmaPLXufE4tx_Q_3zHPdK_umE40U7jWfY33YO0CJr1Xyz_qycxoEQRcxYb8oBognkKADl3Ml7vQcbi9j5MRdqry8mY2j-Eehm4gGHHfQyagopRnfSfX5tb4_TfjHznnoR3fe3ACuAuA1GOH8fTCfL3ghV_zXFomyxIirbJRlH562reepaulvPXmq4ZjnidZAcLoYTOTan2lsqCcyrLk0enJg6V8fzcquvqCQWEz1AoZvx_cj-nEl2H3IDJVf6K34OJfzhsiVJcv9JcHyTgshcK1da0miQx9Kk95fv9g12L67opJN9-TofCE4xQjy8Y2hsgVexEDrkUAnO9-7Saty5ABIMZLg0bEfI6joekXHHXyL4jKTXYqJUM_tZFwhX2A05fFVtRYSsOdXgmD_Bdd1FlBHqYKuymWivNU-kytd1Jq-XZ_so0MiFlCxHjJcsL2a8Ykpe-h_HQdSWy7DO5ytB6UXzkwXqZSlXGpmjqZFaA6pqiCi2Ryp2H9gm1I5WpCwNq87SgqDWOWoOSwWqAvlSzMM2x6pcbrKAEh-UqSClc-MeStLuXDSa4EI=w2560-h1305?auditContext=prefetch "圖片")](https://lh3.googleusercontent.com/rd-d/ALs6j_FrBpaFNAfRbkCV93YMRN8D8cmTYWqLEAgms7P0z8ro1RATgU37Ylwx_R55uRZKok4lJNiOd7WhOEDpuYpmqgXdA_5JuxlC8kpDPKmGvnfTKR7sinEN_6wty1HigM2WrOtg_Ny-U50D74Iv9wXylO7D6oxXvp1-R82mPO48YrDS-2SR0HeOaq8TMdnwPVO7rQVs8W094ioCjFQ5OMkmwWrSEFXgs_9dRcwUPfE_HT3qzzVQ1s9YP4OE-nepBFQ5UaOVsjWTalrqGcUzp539cnrqeWeaAKDO1MpKeQaRS-7R8oVhUoPf0D7fvgEDtZUmD86nVZd-SUDf3QwGYp4pzw1UPHBXV7u0prTNcVPhh-8JskIalh78T6CwR3vZu-hd82SiKix_hbH-Rd87ENI6QxVVoUwffnbYB3UFHXKc72AFCKhw29JmsfyVly0qKd68ULXjPAbapbe4oh5cdlzmN99tjqB-aRr5kf5YBDF-lj9eJNmg7pGnsCnzxTyK1qYNqCBPeeEbh4F8c0Pt0djABpDaqcPyE2XI9vgWQOoTbslFpKuZYvD8PwrqBH5f5N7a3eGVgm_gmaPLXufE4tx_Q_3zHPdK_umE40U7jWfY33YO0CJr1Xyz_qycxoEQRcxYb8oBognkKADl3Ml7vQcbi9j5MRdqry8mY2j-Eehm4gGHHfQyagopRnfSfX5tb4_TfjHznnoR3fe3ACuAuA1GOH8fTCfL3ghV_zXFomyxIirbJRlH562reepaulvPXmq4ZjnidZAcLoYTOTan2lsqCcyrLk0enJg6V8fzcquvqCQWEz1AoZvx_cj-nEl2H3IDJVf6K34OJfzhsiVJcv9JcHyTgshcK1da0miQx9Kk95fv9g12L67opJN9-TofCE4xQjy8Y2hsgVexEDrkUAnO9-7Saty5ABIMZLg0bEfI6joekXHHXyL4jKTXYqJUM_tZFwhX2A05fFVtRYSsOdXgmD_Bdd1FlBHqYKuymWivNU-kytd1Jq-XZ_so0MiFlCxHjJcsL2a8Ykpe-h_HQdSWy7DO5ytB6UXzkwXqZSlXGpmjqZFaA6pqiCi2Ryp2H9gm1I5WpCwNq87SgqDWOWoOSwWqAvlSzMM2x6pcbrKAEh-UqSClc-MeStLuXDSa4EI=w2560-h1305?auditContext=prefetch "圖片")
 
